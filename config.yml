@@ -42,3 +42,21 @@ item:
   permission:
     use: false
     node: "chatpingerpro.item"
+
+inventory:
+  enable: true
+
+  # Specify the format of the inventory link in chat.
+  format: '&r<{DISPLAYNAME}&r''s Inventory&r>'
+
+  # Which words should be parsed as an inventory link
+  delimiter:
+    - "[inventory]"
+    - ".inventory"
+    - "[inv]"
+    - ".inv"
+
+  # Require permission
+  permission:
+    use: false
+    node: "chatpingerpro.inventory"
