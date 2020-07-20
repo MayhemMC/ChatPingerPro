@@ -12,3 +12,9 @@ Simply say a players in-game name in chat and this plugin will automatically par
 Simply say a configurable word `config.yml` to be parsed as the item your holding.
 
 ![](https://i.ibb.co/VxmLrnx/Annotation-2020-07-20-135317.png)
+
+## Inventory
+Simply say a configurable word `config.yml` to be parsed to link a preview of your entire inventory.
+
+![](https://i.ibb.co/YQTFyTt/Annotation-2020-07-20-160406.png)
+![](https://i.ibb.co/dM02kZb/Annotation-2020-07-20-160423.png)

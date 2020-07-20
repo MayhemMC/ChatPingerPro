@@ -107,7 +107,7 @@ public class Main extends JavaPlugin implements Listener {
 						hover.removeComponent(hover.getParts().size() -1);
 
 						// Parse the placeholders and add it to the new component
-						TextComponent ping = new TextComponent(new PlaceholderParser(cfg.getString("ping.format")).parseAs(event.getPlayer()));
+						TextComponent ping = new TextComponent(new PlaceholderParser(cfg.getString("ping.format")).parseAs(player));
 						ping.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover.create()));
 					  	component.addExtra(ping);
 
