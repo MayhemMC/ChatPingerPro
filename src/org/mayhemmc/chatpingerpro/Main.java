@@ -44,10 +44,10 @@ public class Main extends JavaPlugin implements Listener {
 		if(cfg.getBoolean("pings.enable")) new ChatPing(event);
 
 		// If items are enabled in the config...
-		if(cfg.getBoolean("items.enable")) new ChatItem(event);
+		// if(cfg.getBoolean("items.enable")) new ChatItem(event);
 
 		// If inventory are enabled in the config...
-		if(cfg.getBoolean("inventory.enable")) new ChatInventory(event);
+		// if(cfg.getBoolean("inventory.enable")) new ChatInventory(event);
 
 	}
 

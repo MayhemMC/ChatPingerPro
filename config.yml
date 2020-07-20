@@ -4,9 +4,6 @@
 # {USERNAME} - gets players IGN
 # {UUID} - gets players UUID
 # {DISPLAYNAME} - gets players nickname
-# -{ITEM} - gets the item the player is holding
-# -{COUNT} - gets the amount of items the player is holding
-# -{INVENTORY} - gets the inventory of the player
 
 pings:
   enable: true
@@ -16,48 +13,7 @@ pings:
   tooltip:
     - '&o{USERNAME}'
 
-  # Play a sound to the player that was pinged
-  sound: BLOCK_ANVIL_HIT
-
   # Require permission
   permission:
     use: false
     node: "chatpingerpro.ping"
-
-# Enable the ability to show off custom items via chat.
-items:
-  enable: true
-
-  # Which delimiters can be used to trigger this function.
-  delimiters:
-    - '[i]'
-    - '[item]'
-
-  # Items that will not show in chat.
-  item-blacklist:
-    - AIR
-
-  # Specify the format of the item in chat
-  format: '&b[&r{ITEM}&b]'
-
-  # Require permission
-  permission:
-    use: false
-    node: "chatpingerpro.item"
-
-# Enable the ability to show off players inventory via chat.
-inventory:
-  enable: true
-
-  # Which delimiters can be used to trigger this function.
-  delimiters:
-    - '[inv]'
-    - '[inventory]'
-
-  # Specify the format of the inventory in chat
-  format: '&b[&r{USERNAME}''s {INVENTORY}&b]'
-
-  # Require permission
-  permission:
-    use: false
-    node: "chatpingerpro.inventory"
