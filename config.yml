@@ -4,6 +4,7 @@
 # {USERNAME} - gets players IGN
 # {UUID} - gets players UUID
 # {DISPLAYNAME} - gets players nickname
+# {ITEM} - gets the item in the players hand
 
 ping:
   enable: true
@@ -17,3 +18,27 @@ ping:
   permission:
     use: false
     node: "chatpingerpro.ping"
+
+item:
+  enable: true
+
+  # Specify the format of the item in chat.
+  format: '&r<{ITEM}&r>'
+
+  # Which words should be parsed as an item
+  delimiter:
+    - "[i]"
+    - ".i"
+    - "[item]"
+    - ".item"
+    - "[hand]"
+    - ".hand"
+
+  # Items that will not be parsed as an item
+  blacklist:
+    - AIR
+
+  # Require permission
+  permission:
+    use: false
+    node: "chatpingerpro.item"
