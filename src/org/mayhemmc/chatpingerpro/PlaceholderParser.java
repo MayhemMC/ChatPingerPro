@@ -27,7 +27,6 @@ public class PlaceholderParser {
 		// Parse ITEM placeholder
 		ItemStack item = sender.getInventory().getItemInHand();
 		ItemMeta meta = item.getItemMeta();
-		System.out.println(meta.getLocalizedName());
 		str = str.replaceAll("\\{ITEM\\}", meta.hasDisplayName() ? meta.getDisplayName() : (meta.hasLocalizedName() ? meta.getLocalizedName() : item.getType().name()));
 
 		// Translate color codes
