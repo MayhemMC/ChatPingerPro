@@ -25,9 +25,13 @@ public class PlaceholderParser {
 		str = str.replaceAll("\\{DISPLAYNAME\\}", sender.getDisplayName());
 
 		// Parse ITEM placeholder
-		ItemStack item = sender.getInventory().getItemInHand();
-		ItemMeta meta = item.getItemMeta();
-		str = str.replaceAll("\\{ITEM\\}", meta.hasDisplayName() ? meta.getDisplayName() : (meta.hasLocalizedName() ? meta.getLocalizedName() : item.getType().name()));
+		try {
+			ItemStack item = sender.getInventory().getItemInHand();
+			ItemMeta meta = item.getItemMeta();
+			str = str.replaceAll("\\{ITEM\\}", meta.hasDisplayName() ? meta.getDisplayName() : (meta.hasLocalizedName() ? meta.getLocalizedName() : item.getType().name()));
+		} catch (NullPointerException error) {
+			// TODO
+		}
 
 		// Translate color codes
 		str = ChatColor.translateAlternateColorCodes("&".charAt(0), str);

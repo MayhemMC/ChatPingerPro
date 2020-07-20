@@ -1,17 +1,25 @@
 package org.mayhemmc.chatpingerpro;
 
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -46,6 +54,23 @@ public class Main extends JavaPlugin implements Listener {
 		// Unregister Main instance.
 		instance = null;
 
+	}
+
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(cmd.getName().equalsIgnoreCase("chatpingerproviewinventory")) {
+			Player viewer = (Player) sender;
+			String uuid = args[0].toLowerCase();
+			InventoryManager.showInv(viewer, uuid);
+			return true;
+		}
+		return false;
+	}
+
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent event) {
+		if (event.getInventory().getType().getDefaultTitle().equals("Player")) {
+			event.setCancelled(true);
+		}
 	}
 
 	@EventHandler
@@ -126,6 +151,28 @@ public class Main extends JavaPlugin implements Listener {
 						  	component.addExtra(item);
 
 						}
+
+					}
+
+				}
+
+			}
+
+			// If pings are enabled & Player has permission to use them
+			if(cfg.getBoolean("inventory.enable") && (!cfg.getBoolean("inventory.permission.use") || sender.hasPermission(cfg.getString("inventory.permission.node")))) {
+
+				// Iterate over the delimiter used for items in the config:
+				for (String delimiter : cfg.getStringList("inventory.delimiter")) {
+
+					// If word is a delimiter:
+					if(word.equalsIgnoreCase(delimiter)) {
+
+						wasWordProcessed = true;
+
+						// Parse the placeholders and add it to the new component
+						TextComponent link = new TextComponent(new PlaceholderParser(cfg.getString("inventory.format")).parseAs(sender));
+						link.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, new InventoryManager(sender).getCommand()));
+					  	component.addExtra(link);
 
 					}
 
