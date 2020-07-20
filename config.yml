@@ -5,7 +5,7 @@
 # {UUID} - gets players UUID
 # {DISPLAYNAME} - gets players nickname
 
-pings:
+ping:
   enable: true
 
   # Specify the format of the ping in chat.
