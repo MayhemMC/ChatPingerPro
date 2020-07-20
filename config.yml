@@ -1,11 +1,20 @@
 # Enable the ability to ping players by saying their name in chat
+
+# Placeholders:
+# {USERNAME} - gets players IGN
+# {UUID} - gets players UUID
+# {DISPLAYNAME} - gets players nickname
+# -{ITEM} - gets the item the player is holding
+# -{COUNT} - gets the amount of items the player is holding
+# -{INVENTORY} - gets the inventory of the player
+
 pings:
   enable: true
 
   # Specify the format of the ping in chat.
-  # "TehPicix" by default would become "@TehPicix"
-  # Available placeholders: {USERNAME} {DISPLAYNAME}
-  format: '&e@{USERNAME}'
+  format: '&e@{DISPLAYNAME}'
+  tooltip:
+    - '&o{USERNAME}'
 
   # Play a sound to the player that was pinged
   sound: BLOCK_ANVIL_HIT
@@ -29,7 +38,6 @@ items:
     - AIR
 
   # Specify the format of the item in chat
-  # Available placeholders: {USERNAME} {DISPLAYNAME} {ITEM}
   format: '&b[&r{ITEM}&b]'
 
   # Require permission
@@ -47,7 +55,6 @@ inventory:
     - '[inventory]'
 
   # Specify the format of the inventory in chat
-  # Available placeholders: {USERNAME} {DISPLAYNAME} {INVENTORY}
   format: '&b[&r{USERNAME}''s {INVENTORY}&b]'
 
   # Require permission
