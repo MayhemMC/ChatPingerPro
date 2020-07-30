@@ -18,3 +18,6 @@ Simply say a configurable word `config.yml` to be parsed to link a preview of yo
 
 ![](https://i.ibb.co/YQTFyTt/Annotation-2020-07-20-160406.png)
 ![](https://i.ibb.co/dM02kZb/Annotation-2020-07-20-160423.png)
+
+## Built in swear filter
+Configure a swear filter with bypass permissions and configurable banned words in `swears.txt`
