@@ -1,5 +1,5 @@
 # ChatPingerPro
-### Adds the ability to ping players and show off custom items in the chat.
+### Adds the ability to ping players and show off custom items in the chat aswell as other configurable chat management features.
 
 Support Versions: [`1.16`, `1.16.1`]
 
