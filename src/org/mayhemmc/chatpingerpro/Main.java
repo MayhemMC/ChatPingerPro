@@ -1,4 +1,5 @@
-package org.mayhemmc.chatpingerpro;
+
+import org.apache.commons.lang.StringUtils;package org.mayhemmc.chatpingerpro;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -226,7 +227,7 @@ public class Main extends JavaPlugin implements Listener {
 						  	component.addExtra(
 						  	  ChatColor.translateAlternateColorCodes("&".charAt(0),
 						  	    cfg.getString("swear-filter.format")
-						  	      .replaceAll("\\{CENSORED\\}", line.replaceFirst(".$", "*"))
+						  	      .replaceAll("\\{CENSORED\\}", StringUtils.repeat("*", line.length()))
 						  	));
 
 						}
