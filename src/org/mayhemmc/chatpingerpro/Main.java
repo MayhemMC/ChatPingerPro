@@ -1,8 +1,15 @@
 package org.mayhemmc.chatpingerpro;
 
-import org.bukkit.event.inventory.InventoryClickEvent;
+import java.io.IOException;
+import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.File;
 
-import java.util.UUID;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,12 +19,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -30,6 +38,21 @@ public class Main extends JavaPlugin implements Listener {
 	// Create variable to store Main instance in later.
 	public static Main instance;
 	public static FileConfiguration cfg;
+	public static File swears;
+
+	// Copy plugin asset utility
+	private void copy(InputStream in, File file) {
+    	try {
+        	OutputStream out = new FileOutputStream(file);
+        	byte[] buf = new byte[1024];
+        	int len;
+        	while((len = in.read(buf)) > 0) out.write(buf,0,len);
+	        out.close();
+	        in.close();
+    	} catch (Exception e) {
+        	e.printStackTrace();
+    	}
+	}
 
 	@Override
 	public void onEnable() {
@@ -39,6 +62,10 @@ public class Main extends JavaPlugin implements Listener {
 
 		// Save default config file.
 		this.saveDefaultConfig();
+
+		// Save default swear words file
+		swears = new File(this.getDataFolder(), "swears.txt");
+		if(!swears.exists()) copy(getResource("swears.txt"), swears);
 
 		// Register event listeners
 		getServer().getPluginManager().registerEvents(this, this);
@@ -73,7 +100,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onChat(AsyncPlayerChatEvent event) {
 
 		// Get the instance of the player that sent the message
@@ -176,6 +203,40 @@ public class Main extends JavaPlugin implements Listener {
 
 					}
 
+				}
+
+			}
+
+			// If swear filter is enabled & Player does not have bypass permission
+			if(cfg.getBoolean("swear-filter.enable") && !sender.hasPermission(cfg.getString("swear-filter.bypass-permission"))) {
+
+				try {
+
+					// Iterate over each swear word:
+					BufferedReader br = new BufferedReader(new FileReader(swears));
+
+					for (String line : br.lines().collect(Collectors.toList())) {
+
+						// If word is a delimiter:
+						if(word.equalsIgnoreCase(line)) {
+
+							wasWordProcessed = true;
+
+							// Parse the placeholders and add it to the new component
+						  	component.addExtra(
+						  	  ChatColor.translateAlternateColorCodes("&".charAt(0),
+						  	    cfg.getString("swear-filter.format")
+						  	      .replaceAll("\\{CENSORED\\}", line.replaceFirst(".$", "*"))
+						  	));
+
+						}
+
+					}
+
+					br.close();
+
+				} catch(IOException err) {
+					err.printStackTrace();
 				}
 
 			}

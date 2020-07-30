@@ -1,6 +1,6 @@
 name: ChatPingerPro
 main: org.mayhemmc.chatpingerpro.Main
-version: 0.3.2
+version: 0.4.3
 authors: [Josh Merlino]
 api-version: 1.16
 commands:

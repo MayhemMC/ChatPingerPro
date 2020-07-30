@@ -5,6 +5,7 @@
 # {UUID} - gets players UUID
 # {DISPLAYNAME} - gets players nickname
 # {ITEM} - gets the item in the players hand
+# {CENSORED} - the word censored by the plugin (All chars replaced with `*`)
 
 ping:
   enable: true
@@ -60,3 +61,12 @@ inventory:
   permission:
     use: false
     node: "chatpingerpro.inventory"
+
+swear-filter:
+  enable: true
+
+  # Specify the format of the inventory link in chat.
+  format: '{CENSORED}'
+
+  # Permission to bypass the sware filter
+  bypass-permission: "chatpingerpro.nocensor"
