@@ -85,6 +85,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	}
 
+	// Internal command for when a user clicks on an inventory link
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(cmd.getName().equalsIgnoreCase("chatpingerproviewinventory")) {
 			Player viewer = (Player) sender;
@@ -95,6 +96,7 @@ public class Main extends JavaPlugin implements Listener {
 		return false;
 	}
 
+	// Make sure players cant steal items out of the inventory preview
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		if (event.getInventory().getType().getDefaultTitle().equals("Player")) {
@@ -102,8 +104,12 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	// Moniter and parse chat events
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onChat(AsyncPlayerChatEvent event) {
+
+		// Make sure the plugin is only canceling events it has to
+		boolean stringWasModified = false;
 
 		// Get the instance of the player that sent the message
 		Player sender = event.getPlayer();
@@ -244,18 +250,27 @@ public class Main extends JavaPlugin implements Listener {
 			}
 
 			// If the word wasnt yet converted to JSON, just add the word into the component
-			if(!wasWordProcessed) component.addExtra(new TextComponent(word));
+			if(wasWordProcessed) {
+				stringWasModified = true;
+			} else {
+				component.addExtra(new TextComponent(word));
+			}
 
 			// Ensure that spaces are put back inline
 			component.addExtra(" ");
 
 		}
 
-		// Cancel origonal chat event
-		event.setCancelled(true);
+		// Send JSON message to all players if the event wasnt canceled by another plugin
+		if(!event.isCancelled() || stringWasModified) {
 
-		// Send JSON message to all players
-		for (Player player : event.getRecipients()) player.spigot().sendMessage(component);
+			// Send JSON message
+			for (Player player : event.getRecipients()) player.spigot().sendMessage(component);
+
+			// Cancel origonal chat event
+			event.setCancelled(true);
+
+		}
 
 	}
 
