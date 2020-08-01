@@ -1,5 +1,6 @@
+package org.mayhemmc.chatpingerpro;
 
-import org.apache.commons.lang.StringUtils;package org.mayhemmc.chatpingerpro;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
